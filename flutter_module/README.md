@@ -64,3 +64,10 @@
     常见的Widget子类为StatelessWidget(无状态)和StatefulWidget(有状态)；
     - StatelessWidget：内部没有保存状态，UI界面创建后不会发生改变；
     - StatefulWidget：内部有保存状态，当状态发生改变，调用setState()方法会触发StatefulWidget的UI发生更新，对于自定义继承自StatefulWidget的子类，必须要重写createState()方法。      
+
+
+**参考文献**
+
+1. [Flutter 跨平台演进及架构开篇](http://gityuan.com/flutter/)
+1. [Flutter中文网](https://flutterchina.club/docs/)
+1. [Flutter开发者文档](https://flutter.dev/docs)
