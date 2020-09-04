@@ -20,17 +20,21 @@ class SecondListActivity : Activity() {
     interface OnDataCallback {
 
         fun onGetData(datas: List<NavItem>);
-
     }
 
+    private var callback: OnDataCallback? = null
+
     var title: String? = null;
+
+    private fun setCallBack(callback: OnDataCallback) {
+        this.callback = callback;
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val recyclerView: RecyclerView = RecyclerView(this)
         recyclerView.setBackgroundColor(Color.WHITE)
         setContentView(recyclerView)
-        recyclerView.setOnClickListener({ v: View? -> {} })
 
         val adapter = SecondListAdapter(ArrayList())
         recyclerView.layoutManager = LinearLayoutManager(this)

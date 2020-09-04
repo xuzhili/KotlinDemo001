@@ -2,9 +2,9 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttermodule/second/list.dart';
-
-import '../main.dart';
+import 'package:fluttermodule/second/animation/animation.dart';
+import 'file:///D:/gitcode/KotlinDemo001/flutter_module/lib/second/list/list.dart';
+import 'package:fluttermodule/sync/futuresync.dart';
 
 class SampleApp extends StatelessWidget {
   @override
@@ -36,14 +36,14 @@ class RandomWidget extends StatefulWidget {
   }
 }
 
-var _suggestion = <WordPair>[];
-
 class RandomWidgetState extends State<RandomWidget> {
+  var homeItems = ["列表页面", "异步任务", "动画"];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     print("lifecycle----" + "initState");
   }
 
@@ -74,23 +74,40 @@ class RandomWidgetState extends State<RandomWidget> {
     print("lifecycle----" + "dispose");
   }
 
-  void onUserTap() {
-    print("onUserTap:");
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return new ListPage();
-    }));
+  void onUserTap(int index) {
+    switch (index) {
+      case 0:
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return new ListPage();
+        }));
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return new DemoWidget();
+          }),
+        );
+        break;
+      case 2:
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return new AnimationApp();
+        }));
+        break;
+    }
   }
 
-  Widget _buildRow(WordPair wordPair, int index) {
-    String title = wordPair.asPascalCase;
+  Widget _buildRow(String title, int index) {
     InkResponse inkResponse = new InkResponse(
         onTap: () {
-          onUserTap();
+          print("onUserTap:");
+          onUserTap(index);
         },
         focusNode: new FocusNode(onKey: (focusNode, key) {
           RawKeyEventDataAndroid androidKey = key.data;
           if (androidKey.keyCode == 23) {
-            onUserTap();
+            print("onUserKeyCenter:");
+            onUserTap(index);
             return true;
           }
           return false;
@@ -104,18 +121,13 @@ class RandomWidgetState extends State<RandomWidget> {
   Widget _buildSuggestions() {
     return new ListView.builder(
         padding: const EdgeInsets.fromLTRB(16.0, 5, 16.0, 5),
-        itemCount: 40,
+        itemCount: homeItems.length * 2,
         itemBuilder: (context, i) {
-          StringBuffer sb = StringBuffer(i);
-          print("list--itemIndex:" + sb.toString());
           if (i.isOdd) {
             return new Divider();
           }
           final index = i ~/ 2;
-          if (index >= _suggestion.length) {
-            _suggestion.addAll(generateWordPairs().take(10));
-          }
-          return _buildRow(_suggestion[index], index);
+          return _buildRow(homeItems[index], index);
         });
   }
 }

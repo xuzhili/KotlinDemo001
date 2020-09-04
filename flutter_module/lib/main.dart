@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,15 @@ import 'home/home.dart';
 String a = "fd";
 
 void main() {
+  dynamic a = "";
+  a = 1;
+  print("object:dynamic:a:" + a.toString());
   runApp(new SampleApp());
 }
 
-
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -17,7 +17,22 @@ android {
         }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    signingConfigs {
+        debug {
+            storeFile file(sign_storeFile_debug)
+            storePassword sign_storePassword_debug
+            keyAlias sign_keyAlias_debug
+            keyPassword sign_keyPassword_debug
+            v2SigningEnabled true
+        }
+        release {
+            storeFile file(sign_storeFile_release)
+            storePassword sign_storePassword_release
+            keyAlias sign_keyAlias_release
+            keyPassword sign_keyPassword_release
+            v2SigningEnabled true
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -26,6 +41,7 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -43,6 +59,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
     implementation project(path: ':flutter')
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 

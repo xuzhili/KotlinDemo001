@@ -1,6 +1,7 @@
 package com.dangbei.kotlin_demo_001.list.adapter
 
 import android.graphics.Color
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +25,7 @@ class SecondListAdapter public constructor() : RecyclerView.Adapter<SecondListAd
 
     public fun addAll(datas: List<NavItem>) {
         this.datas!!.addAll(datas)
-        notifyDataSetChanged()
+        notifyData()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SecondItemViewHolder {
@@ -32,17 +33,19 @@ class SecondListAdapter public constructor() : RecyclerView.Adapter<SecondListAd
     }
 
     override fun getItemCount(): Int {
-        if (datas != null) {
+//        if (datas != null) {
+        datas = null
             return datas!!.size
-        } else {
-            return 0
-        }
+//        } else {
+//            return 0
+//        }
     }
 
     override fun onBindViewHolder(holder: SecondItemViewHolder, position: Int) {
         val data = datas!!.get(position)
         holder.titleTv!!.text = data.title
         holder.subTitleTv!!.text = data.subTitle
+        data.title!!.printSelf()
 
         Glide.with(holder.itemView.context)
                 .load(data.url)
@@ -90,4 +93,12 @@ class SecondListAdapter public constructor() : RecyclerView.Adapter<SecondListAd
 
     }
 
+}
+
+fun String.printSelf() {
+    Log.d("SecondListAdapter ", "String printSelf:" + this)
+}
+
+fun RecyclerView.Adapter<SecondListAdapter.SecondItemViewHolder>.notifyData() = this.apply {
+    notifyDataSetChanged()
 }

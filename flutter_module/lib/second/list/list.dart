@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,28 +38,57 @@ class NewsBody extends StatefulWidget {
 class NewsBodyState extends State<NewsBody> {
   List<NavigationItem> navItems;
 
+  FocusNode textFocusNode;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    requestData((navItems) {
-      setState(() {
-        this.navItems = navItems;
-      });
-    });
+    textFocusNode = new FocusNode(
+      canRequestFocus: true,
+      onKey: (focusNode, rawKeyEvent) {
+        RawKeyEventDataAndroid androidKey = rawKeyEvent.data;
+        print("textWidget onKey:" + androidKey.keyCode.toString());
+        return false;
+      },
+    );
+    requestData().then(
+      (value) {
+        setState(() {
+          this.navItems = value;
+        });
+      },
+    ).then((value) {
+      return Future.delayed(new Duration(seconds: 5)).then(
+        (value) {
+          sleep(new Duration(seconds: 5));
+          print("requestData" + ":delay:sleep");
+        },
+      );
+    }).whenComplete(
+      () => {
+        print("request list compelete"),
+      },
+    );
+    print("requestData" + ":initState");
   }
 
-  void requestData(Function(List<NavigationItem>) callback) async {
+  Future<List<NavigationItem>> requestData() async {
     Dio dio = new Dio();
     print("requestData" + ":start");
-    var response = await dio.post(
+    Response response = await dio.post(
         "http://tytestapi.qun7.com/skip/nav/getallrow",
         data: {"versionCode": "1", "versionName": "1.0"});
     List list = response.data["data"]["list"] as List;
-    List<NavigationItem> result =
-        list.map((e) => NavigationItem.fromjson(e)).toList();
-    callback.call(result);
-    print("requestData" + ":end" + result.toString());
+    List<NavigationItem> result = list
+        .map(
+          (e) => NavigationItem.fromjson(e),
+        )
+        .toList();
+    //阻塞主页面
+//    sleep(new Duration(seconds: 5));
+    print("requestData" + ":end");
+    return result;
   }
 
   @override
@@ -75,19 +106,43 @@ class NewsBodyState extends State<NewsBody> {
           ),
           width: 400,
         ),
-        new FloatingActionButton(
-          onPressed: () {
-            Toast.show("press action button", context);
-          },
-          focusNode: new FocusNode(onKey: (focusNode, rawKeyEvent) {
-            RawKeyEventDataAndroid rawKeyAndroid = rawKeyEvent.data;
-            if (rawKeyAndroid.keyCode == 23) {
-              Toast.show("click action button", context);
-              return true;
-            }
-            return false;
-          }),
-        )
+        new Column(
+          children: <Widget>[
+            new InkResponse(
+              onTap: () {
+                Toast.show("i am a textWidget", context);
+              },
+              onFocusChange: (focused) {
+                Toast.show("textWidget focused:" + focused.toString(), context);
+              },
+              focusNode: textFocusNode,
+              child: new Text(
+                "TextWidget",
+              ),
+            ),
+            new FloatingActionButton(
+              onPressed: () {
+                Toast.show("press action button", context);
+              },
+              focusNode: new FocusNode(onKey: (focusNode, rawKeyEvent) {
+                RawKeyEventDataAndroid rawKeyAndroid = rawKeyEvent.data;
+                //down
+                if (rawKeyAndroid.keyCode == 23) {
+                  Toast.show("click action button", context);
+                  return true;
+                  //up
+                } else if (rawKeyAndroid.keyCode == 19) {
+                  print("FloatingActionButton" +
+                      ":key:" +
+                      rawKeyAndroid.keyCode.toString());
+                  textFocusNode.requestFocus();
+                  return true;
+                }
+                return false;
+              }),
+            )
+          ],
+        ),
       ],
     );
   }
@@ -139,6 +194,7 @@ class NewsItemState extends State<NewsItem> {
       children: <Widget>[
         InkResponse(
           canRequestFocus: true,
+          //优先级低于自定义key
           onTap: () {
             Toast.show(navItem.title, context);
           },
@@ -146,7 +202,7 @@ class NewsItemState extends State<NewsItem> {
             print("keyCode:" + key.toString());
             RawKeyEventDataAndroid data = key.data;
             print("keyCode2:" + data.keyCode.toString());
-            if (data.keyCode == 23) {
+            if (data.keyCode == 23 || data.keyCode == 66) {
               Toast.show("click:" + navItem.title, context);
               return true;
             }
