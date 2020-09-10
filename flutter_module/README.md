@@ -26,6 +26,8 @@
     
     - 生成 ios app，flutter build ios，生成app文件后，修改版本号再打包
 
+#### Flutter怎么运行的
+
 > 程序的运行方式：静态编译（Ahead of time）与动态解释（Just in time）
 
     - 静态编译的程序在执行前全部被翻译成机器码，即“提前编译”，代表语言java，C/C++
@@ -56,6 +58,8 @@
     - FlutterActivity.java的onCreate过程，通过FlutterJNI的AttachJNI()方法来初始化引擎Engine、Dart虚拟机、Isolate、taskRunner等对象。
     再经过层层处理最终调用main.dart中main()方法，执行runApp(Widget app)来处理整个Dart业务代码。
 
+#### Flutter 代码程序
+
 > flutter UI框架
 
 ![flutter UI框架](pictures/flutter_widget_arch.png)
@@ -65,6 +69,7 @@
     - StatelessWidget：内部没有保存状态，UI界面创建后不会发生改变；
     - StatefulWidget：内部有保存状态，当状态发生改变，调用setState()方法会触发StatefulWidget的UI发生更新，对于自定义继承自StatefulWidget的子类，必须要重写createState()方法。      
 
+>
 
 **参考文献**
 

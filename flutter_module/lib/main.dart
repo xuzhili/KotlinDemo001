@@ -12,9 +12,6 @@ import 'home/home.dart';
 String a = "fd";
 
 void main() {
-  dynamic a = "";
-  a = 1;
-  print("object:dynamic:a:" + a.toString());
   runApp(new SampleApp());
 }
 

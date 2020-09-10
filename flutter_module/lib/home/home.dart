@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttermodule/second/animation/animation.dart';
+import 'package:fluttermodule/second/message/message.dart';
 import 'file:///D:/gitcode/KotlinDemo001/flutter_module/lib/second/list/list.dart';
 import 'package:fluttermodule/sync/futuresync.dart';
 
@@ -37,7 +38,7 @@ class RandomWidget extends StatefulWidget {
 }
 
 class RandomWidgetState extends State<RandomWidget> {
-  var homeItems = ["列表页面", "异步任务", "动画"];
+  var homeItems = ["列表页面", "异步任务", "动画", "通信"];
 
   @override
   void initState() {
@@ -92,6 +93,11 @@ class RandomWidgetState extends State<RandomWidget> {
       case 2:
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return new AnimationApp();
+        }));
+        break;
+      case 3:
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return new MessageApp();
         }));
         break;
     }
