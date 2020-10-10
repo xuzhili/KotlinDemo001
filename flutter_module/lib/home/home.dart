@@ -1,15 +1,20 @@
+import 'dart:collection';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttermodule/second/animation/animation.dart';
 import 'package:fluttermodule/second/message/message.dart';
+import 'package:fluttermodule/second/sync/futuresync.dart';
 import 'file:///D:/gitcode/KotlinDemo001/flutter_module/lib/second/list/list.dart';
-import 'package:fluttermodule/sync/futuresync.dart';
+import 'package:toast/toast.dart';
 
 class SampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String a = null;
+    Toast.show("msg:" + a.toString(), context);
     var theme = new ThemeData(
       primaryColor: Colors.red,
       visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -38,7 +43,8 @@ class RandomWidget extends StatefulWidget {
 }
 
 class RandomWidgetState extends State<RandomWidget> {
-  var homeItems = ["列表页面", "异步任务", "动画", "通信"];
+  // var homeItems = ["列表页面", "异步任务", "动画", "通信"];
+  var homeItems = ["列表页面", "异步任务", "动画"];
 
   @override
   void initState() {
@@ -58,7 +64,8 @@ class RandomWidgetState extends State<RandomWidget> {
   @override
   Widget build(BuildContext context) {
     print("lifecycle----" + "build");
-    return _buildSuggestions();
+    var widget = _buildSuggestions();
+    return widget;
   }
 
   @override

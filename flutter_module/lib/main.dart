@@ -9,8 +9,6 @@ import 'package:toast/toast.dart';
 
 import 'home/home.dart';
 
-String a = "fd";
-
 void main() {
   runApp(new SampleApp());
 }

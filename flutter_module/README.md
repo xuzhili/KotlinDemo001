@@ -1,6 +1,6 @@
 #### Dart语言
 
-> Dart语言是Google开发的一种OOP语言（Object Oriented Programming，面向对象编程）
+> Dart语言是Google开发的一种强类型 OOP语言（Object Oriented Programming，面向对象编程）,它继承了许多与 C、Java、JavaScript 及其他语言相同的语句和表达式语法
 
 **既有动态语言特性，也有静态语言特性**
     
@@ -8,7 +8,39 @@
     
     - 静态语言，编译时检测类型，如java，类型发生错误在编译时发现
 
+> dart 语言示例
+
+```
+// 定义一个方法.
+printInteger(int aNumber) {
+    // 打印输出到控制台。字符串插值,字符串字面量中包含的变量或表达式
+  print('The number is $aNumber.');
+}
+
+// Dart 程序从 main() 函数开始执行。
+main() {
+ // 声明并初始化一个变量。
+  var number = 42;
+  // 调用一个函数。
+  printInteger(number);
+}
+```
+
+> dart 语言的一些概念
+
+    - 所有变量引用的都是 对象，每个对象都是一个 类 的实例。数字、函数以及 null 都是对象。所有的类都继承于 Object 类
+    - 尽管 Dart 是强类型语言，但是在声明变量时指定类型是可选的，因为 Dart 可以进行类型推断。
+    在上述代码中，变量 number 的类型被推断为 int 类型。如果想显式地声明一个不确定的类型，可以使用特殊类型 dynamic
+    - Dart 支持顶级函数（例如 main 方法），同时还支持定义属于类或对象的函数（即 静态 和 实例方法）。你还可以在函数中定义函数（嵌套 或 局部函数）
+    - Dart 没有类似于 Java 那样的 public、protected 和 private 成员访问限定符。如果一个标识符以下划线 (_) 开头则表示该标识符在库内是私有的
+
+
 #### Flutter是什么
+
+**跨平台的UI框架**
+
+- Fuchsia是Google内部正在开发的一款新的操作系统，从Fuchsia技术架构来看，内核层zircon的基础LK是专为嵌入式应用中小型系统设计的内核，代码简洁
+，适合嵌入式设备和高性能设备，比如IOT、移动可穿戴设备等
 
 > 跨平台技术的主要特点
 
@@ -52,6 +84,21 @@
     - 其他跨平台方案(如RN)，通过JSBridge中间层来将JS写的APP转换成相应的原生渲染逻辑，可见比Native代码增加了更多逻辑，性能逊色差于原生框架；
     - Flutter框架，APP通过调用Dart Framework层，再直接调用到skia来渲染界面，并没有经过原生Framework过程，可见其渲染性能并不会弱于Native技术，这是一个性能上限很高的跨平台技术。
 
+> flutter内存模型
+
+- 何为Isolate，从字面上理解是“隔离”，isolate之间是逻辑隔离的。Isolate中的代码也是按顺序执行，
+因为Dart没有共享内存的并发，没有竞争的可能性，故不需要加锁，也没有死锁风险。对于Dart程序的并发则需要依赖多个isolate来实现。
+
+![flutter 流程架构](pictures/isolate_heap.png)
+
+    - isolate堆是运该isolate中代码分配的所有对象的GC管理的内存存储
+    - vm isolate是一个伪isolate，里面包含不可变对象，比如null，true，false
+    - isolate堆能引用vm isolate堆中的对象，但vm isolate不能引用isolate堆
+    - isolate彼此之间不能相互引用
+    - 个isolate都有一个执行dart代码的Mutator thread，一个处理虚拟机内部任务(比如GC, JIT等)的helper thread；
+    可见，isolate是拥有内存堆和控制线程，虚拟机中可以有很多isolate，但彼此之间内存不共享，无法直接访问，
+    只能通过dart特有的Port端口通信；isolate除了拥有一个mutator控制线程，还有一些其他辅助线程，比如后台JIT编译线程、GC清理/并发标记线程；
+
 > flutter 应用启动流程
 
     - FlutterApplication.java的onCreate过程主要完成初始化配置、加载引擎libflutter.so、注册JNI方法；
@@ -74,5 +121,6 @@
 **参考文献**
 
 1. [Flutter 跨平台演进及架构开篇](http://gityuan.com/flutter/)
-1. [Flutter中文网](https://flutterchina.club/docs/)
-1. [Flutter开发者文档](https://flutter.dev/docs)
+2. [Flutter中文网](https://flutterchina.club/docs/)
+3. [Flutter开发者文档](https://flutter.dev/docs)
+4. [dart官方网站](https://dart.cn/guides)
