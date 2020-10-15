@@ -33,12 +33,11 @@ class SecondListAdapter public constructor() : RecyclerView.Adapter<SecondListAd
     }
 
     override fun getItemCount(): Int {
-//        if (datas != null) {
-        datas = null
+        if (datas != null) {
             return datas!!.size
-//        } else {
-//            return 0
-//        }
+        } else {
+            return 0
+        }
     }
 
     override fun onBindViewHolder(holder: SecondItemViewHolder, position: Int) {
