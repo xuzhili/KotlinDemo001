@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttermodule/second/animation/animation.dart';
+import 'package:fluttermodule/second/list/list.dart';
 import 'package:fluttermodule/second/message/message.dart';
 import 'package:fluttermodule/second/sync/futuresync.dart';
-import 'file:///D:/gitcode/KotlinDemo001/flutter_module/lib/second/list/list.dart';
 import 'package:toast/toast.dart';
 
 class SampleApp extends StatelessWidget {
