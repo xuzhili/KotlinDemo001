@@ -102,7 +102,7 @@ class MessageState extends State<MessageDemo> {
           ),
           textColor: Colors.cyan,
           child: new Text(
-              methodResultData != null ? methodResultData : "nativeView"),
+              "getNativeView"),
         ),
         hasNativeView
             ? Container(

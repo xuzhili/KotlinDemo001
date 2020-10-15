@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttermodule/second/animation/animation.dart';
 import 'package:fluttermodule/second/list/list.dart';
 import 'package:fluttermodule/second/message/message.dart';
-import 'package:fluttermodule/second/sync/futuresync.dart';
+import 'package:fluttermodule/second/syncr/futuresync.dart';
 import 'package:toast/toast.dart';
 
 class SampleApp extends StatelessWidget {
@@ -43,27 +43,27 @@ class RandomWidget extends StatefulWidget {
 }
 
 class RandomWidgetState extends State<RandomWidget> {
-  // var homeItems = ["列表页面", "异步任务", "动画", "通信"];
-  var homeItems = ["列表页面", "异步任务", "动画"];
+  var homeItems = ["列表页面", "异步任务", "动画", "通信"];
+  // var homeItems = ["列表页面", "异步任务", "动画"];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    print("lifecycle----" + "initState");
+    print("lifecycle---home-" + "initState");
   }
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    print("lifecycle----" + "didChangeDependencies");
+    print("lifecycle---home-" + "didChangeDependencies");
   }
 
   @override
   Widget build(BuildContext context) {
-    print("lifecycle----" + "build");
+    print("lifecycle---home-" + "build");
     var widget = _buildSuggestions();
     return widget;
   }
@@ -72,14 +72,14 @@ class RandomWidgetState extends State<RandomWidget> {
   void deactivate() {
     // TODO: implement deactivate
     super.deactivate();
-    print("lifecycle----" + "deactivate");
+    print("lifecycle---home-" + "deactivate");
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    print("lifecycle----" + "dispose");
+    print("lifecycle---home-" + "dispose");
   }
 
   void onUserTap(int index) {

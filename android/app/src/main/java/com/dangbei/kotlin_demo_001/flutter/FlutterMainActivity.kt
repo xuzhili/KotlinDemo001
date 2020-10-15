@@ -51,8 +51,8 @@ class FlutterMainActivity() : FlutterActivity(), MethodChannel.MethodCallHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val registrarForEvent = registrarFor(EVENT_CHANNEL)
-        val registrarForMethod = registrarFor(METHOD_CHANNEL)
+        val registrarForEvent = registrarFor("EVENT_CHANNEL")
+        val registrarForMethod = registrarFor("METHOD_CHANNEL")
 
         val eventChannel = EventChannel(registrarForEvent.messenger(), EVENT_CHANNEL)
         eventChannel.setStreamHandler(this)
@@ -60,7 +60,7 @@ class FlutterMainActivity() : FlutterActivity(), MethodChannel.MethodCallHandler
         val methodChannel = MethodChannel(registrarForMethod.messenger(), METHOD_CHANNEL)
         methodChannel.setMethodCallHandler(this)
 
-        registrarForMethod.platformViewRegistry().registerViewFactory(VIEW_PATH, ViewFactory(StandardMessageCodec.INSTANCE));
+        registrarFor("VIEW_CHANNEL").platformViewRegistry().registerViewFactory(VIEW_PATH, ViewFactory(StandardMessageCodec.INSTANCE));
     }
 
     /**

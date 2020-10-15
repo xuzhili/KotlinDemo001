@@ -44,6 +44,7 @@ class NewsBodyState extends State<NewsBody> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("lifecycle---list-" + "initState");
     textFocusNode = new FocusNode(
       canRequestFocus: true,
       onKey: (focusNode, rawKeyEvent) {
@@ -92,8 +93,16 @@ class NewsBodyState extends State<NewsBody> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    print("lifecycle---list-" + "didChangeDependencies");
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    print("lifecycle---list-" + "build");
     return new Row(
       children: <Widget>[
         new Container(
@@ -145,6 +154,20 @@ class NewsBodyState extends State<NewsBody> {
         ),
       ],
     );
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    print("lifecycle---list-" + "deactivate");
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print("lifecycle---list-" + "dispose");
   }
 }
 
